@@ -11,7 +11,7 @@
     <p>Your account was created successfully. Now create your profile.</p>
   </div>
   <form th:action="@{/saveProfile}" th:object="${user}"
-        method="post" style="max-width: 600px; margin: 0 auto;">
+        method="patch" style="max-width: 600px; margin: 0 auto;">
     <div class="m-3">
 
       <div class="form-group row">

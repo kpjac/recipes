@@ -17,7 +17,7 @@ public class Image {
 
     private String filename;
 
-    private String type;
+    private String mimeType;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipeId", referencedColumnName = "id")
@@ -33,7 +33,7 @@ public class Image {
     public Image(byte[] image, String filename, String type, Recipe recipe) {
         this.image = image;
         this.filename = filename;
-        this.type = type;
+        this.mimeType = mimeType;
         this.recipe = recipe;
     }
 
@@ -62,11 +62,11 @@ public class Image {
     }
 
     public String getType() {
-        return type;
+        return mimeType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public Recipe getRecipe() {
