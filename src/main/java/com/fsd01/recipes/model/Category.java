@@ -14,6 +14,6 @@ public enum Category {
     SNACK,
     SOUP,
     HOLIDAY,
-    VEG
+    BEVERAGE
 
 }

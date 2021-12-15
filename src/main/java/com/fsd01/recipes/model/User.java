@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -22,6 +23,10 @@ public class User {
     private String email;
 
     @NotNull
+    @Size(min = 6, max = 100,
+            message = "Password must be between 6 and 100 characters long")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$",
+            message = "Password must contain a lowercase letter, an uppercase letter, a digit, and a special character")
     private String password;
 
     @Transient
@@ -31,6 +36,9 @@ public class User {
     private Timestamp createTime;
 
     @Size(min = 1, max = 50)
+    @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9\s]+$",
+            message = "Display may only contain letters, digits and spaces")
     private String displayName;
 
     @Size(min = 10, max = 2000, message = "Bio must be at least 10 characters and no more than 2000 characters long.")

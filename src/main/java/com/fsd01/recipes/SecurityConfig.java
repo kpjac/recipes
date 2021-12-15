@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception {
         security.httpBasic().disable();
         security.authorizeRequests()
-                .antMatchers("/users").authenticated()
+                .antMatchers("/createRecipe").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

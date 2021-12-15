@@ -36,7 +36,7 @@ public class AppController {
         return "register";
     }
 
-    @PostMapping("/process_register")
+    @PostMapping("/processRegister")
     public String processRegister(@Valid User user, BindingResult result, Model model) {
 
         for (FieldError error : result.getFieldErrors()) {
@@ -69,7 +69,25 @@ public class AppController {
 
         userService.addUser(user);
 
-        return "register_success";
+        model.addAttribute("user", user);
+
+        return "accountCreated";
+    }
+
+    @PostMapping("/saveProfile")
+    public String saveProfile(@Valid User user, BindingResult result, Model model) {
+
+        for (FieldError error : result.getFieldErrors()) {
+            System.out.println(error.getDefaultMessage());
+        }
+
+        if (result.hasErrors()) {
+            return "accountCreated";
+        }
+
+        userService.updateUser(user);
+
+        return "profileSaved";
     }
 
 }
