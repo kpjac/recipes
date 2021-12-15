@@ -3,3 +3,17 @@ Friday, December 10
 2. Set up project in IntelliJ and Github repo, make Trello board
 3. --
 
+Sunday, December 12
+1. Project set up and project tools configured
+2. Begin models
+3. --
+
+Monday, December 13
+1. Models were started (User and Recipe)
+2. Continue models
+3. --
+
+Tuesday, December 14
+1. Continued working on models.
+2. Finish models, configure Spring Security, and begin controllers.
+3. Generic classes as JPA entities?
