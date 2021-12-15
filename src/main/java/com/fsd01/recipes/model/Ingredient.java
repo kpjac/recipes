@@ -1,12 +1,13 @@
 package com.fsd01.recipes.model;
 
 import javax.measure.Quantity;
+import javax.measure.quantity.Volume;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ingredients")
-public class Ingredient<T extends Quantity<T>> {
+public class Ingredient {
 
     @Id
     @GeneratedValue
@@ -18,7 +19,7 @@ public class Ingredient<T extends Quantity<T>> {
     private Recipe recipe;
 
     @Lob
-    private Quantity<T> qty;
+    private Quantity<Volume> qty;
 
     @NotNull
     private String name;
@@ -26,7 +27,7 @@ public class Ingredient<T extends Quantity<T>> {
     public Ingredient() {
     }
 
-    public Ingredient(Recipe recipe, Quantity<T> qty, String name) {
+    public Ingredient(Recipe recipe, Quantity qty, String name) {
         this.recipe = recipe;
         this.qty = qty;
         this.name = name;
@@ -48,11 +49,11 @@ public class Ingredient<T extends Quantity<T>> {
         this.recipe = recipe;
     }
 
-    public Quantity<T> getQty() {
+    public Quantity getQty() {
         return qty;
     }
 
-    public void setQty(Quantity<T> qty) {
+    public void setQty(Quantity qty) {
         this.qty = qty;
     }
 
