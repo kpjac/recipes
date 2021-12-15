@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
-<head>
+<head th:fragment="head">
     <meta charset="ISO-8859-1">
-    <title>Recipes</title>
+    <title th:include=":: #pageTitle" id="pageTitle">Recipe Network</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<header class="container text-center main-menu" th:fragment="header">
+    <h3><a th:href="@{/addRecipe}">Add Recipe</a></h3>
+</header>
 </body>
 </html>
