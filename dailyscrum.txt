@@ -17,3 +17,8 @@ Tuesday, December 14
 1. Continued working on models.
 2. Finish models, configure Spring Security, and begin controllers.
 3. Generic classes as JPA entities?
+
+Wednesday, December 15
+1. Finished models, configured Security, began controllers.
+2. Deploy to Heroku, make progress on templates.
+3. --
