@@ -6,6 +6,9 @@ import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "recipes")
@@ -32,7 +35,24 @@ public class Recipe {
     @CreationTimestamp
     private Timestamp createTime;
 
+    private Integer cookingTime;
 
+    private Integer serves;
+
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Ingredient> ingredients;
+
+    @Lob
+    private LinkedList<String> steps;
+
+    private Difficulty difficulty;
+
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<RecipeMade> timesMade;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imageId", referencedColumnName = "id")
+    private Image image;
 
 
 

@@ -39,6 +39,9 @@ public class User {
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Recipe> recipes;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<RecipeMade> recipesMade;
+
 
 
 
