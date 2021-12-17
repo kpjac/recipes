@@ -1,7 +1,7 @@
 package com.fsd01.recipes.controller;
 
 import com.fsd01.recipes.model.Recipe;
-import com.fsd01.recipes.model.User;
+import com.fsd01.recipes.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

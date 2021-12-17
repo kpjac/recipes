@@ -2,6 +2,7 @@ package com.fsd01.recipes.controller;
 
 import com.fsd01.recipes.model.RecipeUserDetails;
 import com.fsd01.recipes.model.User;
+import com.fsd01.recipes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

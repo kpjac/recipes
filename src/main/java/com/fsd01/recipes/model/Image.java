@@ -1,5 +1,6 @@
 package com.fsd01.recipes.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -9,13 +10,14 @@ import javax.persistence.*;
 public class Image {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @Lob
     private byte[] image;
 
-    private String filename;
+    private String fileName;
 
     private String mimeType;
 
@@ -30,18 +32,18 @@ public class Image {
         this.image = image;
     }
 
-    public Image(byte[] image, String filename, String type, Recipe recipe) {
-        this.image = image;
-        this.filename = filename;
-        this.mimeType = mimeType;
+    public Image(String name, String type, byte[] data, Recipe recipe) {
+        this.fileName = name;
+        this.mimeType = type;
+        this.image = data;
         this.recipe = recipe;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -54,11 +56,11 @@ public class Image {
     }
 
     public String getFilename() {
-        return filename;
+        return fileName;
     }
 
     public void setFilename(String filename) {
-        this.filename = filename;
+        this.fileName = filename;
     }
 
     public String getType() {

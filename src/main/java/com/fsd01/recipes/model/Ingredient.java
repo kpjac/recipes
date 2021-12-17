@@ -1,6 +1,7 @@
 package com.fsd01.recipes.model;
 
 import javax.measure.Quantity;
+import javax.measure.Unit;
 import javax.measure.quantity.Volume;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -64,4 +65,5 @@ public class Ingredient {
     public void setName(String name) {
         this.name = name;
     }
+
 }

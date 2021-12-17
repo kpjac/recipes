@@ -1,10 +1,13 @@
 package com.fsd01.recipes.controller;
 
+import com.fsd01.recipes.message.ResponseMessage;
+import com.fsd01.recipes.model.Ingredient;
 import com.fsd01.recipes.model.Recipe;
 import com.fsd01.recipes.model.RecipeUserDetails;
 import com.fsd01.recipes.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +17,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import javax.measure.Quantity;
+import javax.measure.quantity.Volume;
+import javax.measure.Unit;
+import javax.measure.spi.SystemOfUnits;
+import tec.units.ri.quantity.Quantities;
+import tec.units.ri.unit.Units;
+import systems.uom.unicode.CLDR;
+import systems.uom.common.USCustomary;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +45,9 @@ public class AppController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private ImageStorageService storageService;
 
     private User currentUser;
 
@@ -104,14 +121,37 @@ public class AppController {
     @GetMapping("/addRecipe")
     public String showRecipeForm(Model model) {
 
-        model.addAttribute("recipe", new Recipe());
+        Recipe recipe = new Recipe();
+
+        recipe.setIngredients(new ArrayList<Ingredient>());
+
+        Ingredient ing = new Ingredient();
+
+        ing.setQty(Quantities.getQuantity(9, USCustomary.TEASPOON));
+
+        model.addAttribute("recipe", recipe);
 
         return "addRecipe";
     }
 
     @PostMapping("/processRecipe")
-    public String processRecipe(@Valid Recipe recipe, Model model) {
+    public String processRecipe(@Valid Recipe recipe, @RequestParam("image") MultipartFile image, Model model) {
+
+
+        ResponseEntity responseEntity;
+        String message = "";
+        try {
+            storageService.store(image, recipe);
+
+            message = "Uploaded the file successfully: " + image.getOriginalFilename();
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + image.getOriginalFilename() + "!";
+            responseEntity = ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+
         model.addAttribute("recipe", recipe);
+        model.addAttribute("uploadResponse", responseEntity);
         return "recipeAdded";
     }
 

@@ -38,10 +38,10 @@ public class Recipe {
     private Integer serves;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
     @Lob
-    private LinkedList<String> steps;
+    private List<String> steps;
 
     private Difficulty difficulty;
 
@@ -56,7 +56,7 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(User creator, Category category, Cuisine cuisine, String title, String description, Integer cookingTime, Integer serves, Set<Ingredient> ingredients, LinkedList<String> steps, Difficulty difficulty, Image image) {
+    public Recipe(User creator, Category category, Cuisine cuisine, String title, String description, Integer cookingTime, Integer serves, List<Ingredient> ingredients, List<String> steps, Difficulty difficulty, Image image) {
         this.creator = creator;
         this.category = category;
         this.cuisine = cuisine;
@@ -142,20 +142,28 @@ public class Recipe {
         this.serves = serves;
     }
 
-    public Set<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public LinkedList<String> getSteps() {
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+    }
+
+    public List<String> getSteps() {
         return steps;
     }
 
-    public void setSteps(LinkedList<String> steps) {
+    public void setSteps(List<String> steps) {
         this.steps = steps;
+    }
+
+    public void addStep(String step) {
+        steps.add(step);
     }
 
     public Difficulty getDifficulty() {

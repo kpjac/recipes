@@ -3,15 +3,26 @@
     padding-bottom: 0px !important;
 }
 
-.authMenu .btn-sm {
-    margin-left: 15px;
-}
-
 
 nav.authMenu li {
     display: inline-block;
 }
 
-select#category option {
-    text-transform: capitalize;
+form {
+    background-color: rgba(255,255,255,0.8);
+}
+
+form h1, form h2, form h5 {
+    text-align: center;
+}
+
+body {
+    background-image: url("../images/fresh-red-bell-pepper-wooden-plank-against-background-kitchen-interior.jpg");
+    /* background-image: url("https://i.pinimg.com/originals/65/4d/93/654d939d992caf8156342868b9f6e735.jpg");
+
+    */
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-attachment: fixed;
+    background-size: cover;
 }

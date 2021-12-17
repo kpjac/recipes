@@ -6,53 +6,142 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container text-center">
-  <div>
-    <h1>Create Account</h1>
-  </div>
-  <form th:action="@{/processRecipe}" th:object="${recipe}"
+<div class="container-md">
+  <form class="p-3 my-3 border rounded" th:action="@{/processRecipe}" th:object="${recipe}"
         method="post" style="max-width: 600px; margin: 0 auto;">
-    <div class="m-3">
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Category</label>
-        <div class="col-8">
-          <select name="category" th:field="*{category}" class="form-control" required>
+    <div class="mb-3">
+    <h1>Add Recipe</h1>
+    </div>
+    <div class="mb-3">
+      <div class="form-group row mb-3">
+        <div class="col-4">
+          <select name="category" id="category" th:field="*{category}" class="form-select" required>
+            <option value="none" data-hidden="true">Select category</option>
             <option th:each="category : ${T(com.fsd01.recipes.model.Category).values()}"
                     th:value="${category}" th:text="${category.label}"></option>
           </select>
           <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Category Error</span>
         </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Cuisine</label>
-        <div class="col-8">
+        <div class="col-4">
           <select name="cuisine" id="cuisine" th:field="*{cuisine}" class="form-control select2-single" required>
-            <option value="">Search cuisine</option>
+            <option value="none" data-hidden="true">Select cuisine</option>
           </select>
           <span th:if="${#fields.hasErrors('cuisine')}" th:errors="*{cuisine}">Cuisine Error</span>
         </div>
+        <div class="col-4">
+          <select name="difficulty" id="difficulty" th:field="*{difficulty}" class="form-select" required>
+            <option value="none" data-hidden="true">Select difficulty</option>
+            <option th:each="difficulty : ${T(com.fsd01.recipes.model.Difficulty).values()}"
+                    th:value="${difficulty}" th:text="${difficulty.label}"></option>
+          </select>
+        </div>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Title</label>
-        <div class="col-8">
-          <input type="text" th:field="*{title}" class="form-control" required />
+      <div class="form-group row mb-3">
+        <label class="col-3 col-form-label" for="title">Title</label>
+        <div class="col-9">
+          <input type="text" id="title" th:field="*{title}" class="form-control" required />
           <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
         </div>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Description</label>
-        <div class="col-8">
-          <textarea th:field="*{description}" class="form-control" rows="3" required>
-          </textarea>
+      <div class="form-group row mb-3">
+        <label class="col-3 col-form-label" for="description">Description</label>
+        <div class="col-9">
+          <textarea id="description" th:field="*{description}" class="form-control" rows="3" required></textarea>
           <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
         </div>
       </div>
 
-      <div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+      <div class="form-group row mb-3">
+        <label class="col-9 col-form-label" for="cookingTime">What is the cooking time (including preparation)?</label>
+        <div class="col-3">
+          <input type="number" id="cookingTime" th:field="*{cookingTime}" class="form-control" placeholder="Minutes" required />
+          <span th:if="${#fields.hasErrors('cookingTime')}" th:errors="*{cookingTime}">Cooking Time Error</span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-3">
+        <label class="col-9 col-form-label" for="serves">How many people does this recipe serve?</label>
+        <div class="col-3">
+          <input type="number" id="serves" th:field="*{serves}" class="form-control" value="4" min="1" max="24" required />
+          <span th:if="${#fields.hasErrors('serves')}" th:errors="*{serves}">Serves Error</span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-3">
+        <label class="col-6 col-form-label" for="formFile">Choose an image for your recipe</label>
+        <div class="col-6">
+          <input type="file" id="formFile" name="image" class="form-control" accept="image/png, image/jpeg, image/gif" required />
+          <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image Error</span>
+        </div>
+      </div>
+
+
+      <h5>Ingredients</h5>
+      <div class="row">
+        <label class="col-2 col-form-label" th:for="ingAmount1">Amount</label>
+        <label class="col-3 col-form-label" th:for="ingUnit1">Unit</label>
+        <label class="col-7 col-form-label" th:for="ingName1">Description</label>
+      </div>
+      <div class="form-group row mb-3" id="ingInfo1">
+        <div class="col-2">
+          <input type="number" th:name="ingAmount1" class="form-control" placeholder="1.5" min="0" step="0.01" />
+        </div>
+        <div class="col-3">
+          <select name="ingUnit1" class="form-select" required>
+            <option th:each="unit : ${T(com.fsd01.recipes.model.IngredientUnit).values()}"
+                    th:value="${unit}" th:selected="${unit.label} == 'Cups'" th:text="${unit.label}"></option>
+          </select>
+        </div>
+        <div class="col-7">
+          <input type="text" name="ingName1" class="form-control" placeholder="Unbleached all-purpose flour">
+        </div>
+      </div>
+      <th:block th:each="i: ${#numbers.sequence(2, 20)}" >
+      <div class="form-group row mb-3" th:id="'ingInfo' + ${i}" th:style="${i} > 5 ? 'display: none;' : ''">
+        <div class="col-2">
+          <input type="number" th:name="'ingAmount' + ${i}" class="form-control" min="0" step="0.01" />
+        </div>
+        <div class="col-3">
+          <select name="'ingUnit' + ${i}" class="form-select" required>
+            <option th:each="unit : ${T(com.fsd01.recipes.model.IngredientUnit).values()}"
+                    th:value="${unit}" th:text="${unit.label}"></option>
+          </select>
+        </div>
+        <div class="col-7">
+          <input type="text" name="'ingName' + ${i}" class="form-control" >
+        </div>
+      </div>
+      </th:block>
+      <div class="form-group row mb-3" id="addIngredient">
+        <div class="col text-center">
+          <button type="button" class="btn btn-light" onclick="addIngredient();">+</button>
+        </div>
+      </div>
+
+      <h5>Instructions</h5>
+      <th:block th:each="i: ${#numbers.sequence(1, 20)}">
+        <div class="form-group row mb-3" th:id="'step' + ${i}" th:style="${i} > 5 ? 'display: none;' : ''">
+          <div class="col-2">
+            <label th:for="'step' + ${i}" th:text="'Step ' + ${i}">Step</label>
+          </div>
+          <div class="col-10">
+            <textarea th:name="'step' + ${i}" th:id="'step' + ${i} + 'instruction'" class="form-control" rows="2"></textarea>
+          </div>
+        </div>
+      </th:block>
+      <div class="form-group row mb-3" id="addStep">
+        <div class="col text-center">
+          <button type="button" class="btn btn-light" onclick="addStep();">+</button>
+        </div>
+      </div>
+
+
+
+
+      <div class="form-group row mb-3">
+        <button type="submit" class="btn btn-primary">Post Your Recipe!</button>
       </div>
 
     </div>
@@ -79,6 +168,22 @@
     }
   });
   });
+  let nextStep = 6;
+  function addStep() {
+    $("#step" + nextStep).show();
+    nextStep++;
+    if (nextStep > 20) {
+      $("#addStep").hide();
+    }
+  }
+  let nextIngredient = 6;
+  function addIngredient() {
+    $("#ingInfo" + nextIngredient).show();
+    nextIngredient++;
+    if (nextIngredient > 20) {
+      $("#addIngredient").hide();
+    }
+  }
 </script>
 </body>
 </html>
