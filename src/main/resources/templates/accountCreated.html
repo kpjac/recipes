@@ -8,29 +8,13 @@
 <div class="container text-center">
   <div>
     <h1>Welcome to Recipe Network</h1>
-    <p>Your account was created successfully. Now create your profile.</p>
+    <p>Your account was created successfully.</p>
   </div>
-  <form th:action="@{/saveProfile}" th:object="${user}"
-        method="patch" style="max-width: 600px; margin: 0 auto;">
-    <div class="m-3">
+  <div>
+    <a href="/">Search for a recipe</a>
+    <a href="/addRecipe">Post a recipe</a>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Tell us a bit about yourself</label>
-        <div class="col-8">
-          <input type="text" th:field="*{bio}" class="form-control" required />
-          <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">Bio Error</span>
-        </div>
-      </div>
-
-      <div>
-        <button type="submit" class="btn btn-primary">Save Profile</button>
-      </div>
-
-      <div><ul th:if="${otherErrors != null}">
-        <li th:each="error : ${otherErrors}"><span th:text="${error}"></span></li>
-      </ul></div>
-    </div>
-  </form>
+  </div>
 </div>
 </body>
 </html>

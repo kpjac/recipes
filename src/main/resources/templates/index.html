@@ -1,16 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head th:fragment="head">
     <meta charset="ISO-8859-1">
     <title th:include=":: #pageTitle" id="pageTitle">Recipe Network</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/select2-theme-bootstrap4-1.0.0/dist/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header class="container text-center main-menu" th:fragment="header">
-    <h3><a th:href="@{/register}">Register</a></h3>
-    <h3><a th:href="@{/addRecipe}">Add Recipe</a></h3>
+    <nav class="authMenu navbar navbar-expand-md justify-content-end">
+        <ul class="navbar-nav">
+            <li class="nav-item" th:if="!${#request.userPrincipal}"><a class="nav-link" th:href="@{/register}">Register</a></li>
+            <li class="nav-item" th:if="!${#request.userPrincipal}"><a class="nav-link" th:href="@{/login}">Login</a></li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span> </li>
+        </ul>
+        <div class="navbar-nav" sec:authorize="isAuthenticated()" >
+            <form class="form-inline" th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <nav class="mainMenu navbar navbar-expand-md navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Recipe Network</span>
+        <a class="nav-item nav-link" th:href="@{/}">Home</a>
+        <a class="nav-item nav-link" th:href="@{/addRecipe}">Add Recipe</a>
+        <div class="navbar-nav ml-auto">
+        <form class="form-inline" th:action="@{/search}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search Recipes" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        </div>
+    </nav>
+
+
+
 </header>
 </body>
 </html>

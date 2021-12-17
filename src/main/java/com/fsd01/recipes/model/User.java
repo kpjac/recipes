@@ -18,25 +18,25 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @NotNull
     @Email
     private String email;
 
-    @NotNull
     @Size(min = 6, max = 100,
             message = "Password must be between 6 and 100 characters long")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$",
             message = "Password must contain a lowercase letter, an uppercase letter, a digit, and a special character")
-    private String password;
+    @Transient
+    private String passwordEntry;
 
     @Transient
     private String passwordRepeat;
+
+    private String password;
 
     @CreationTimestamp
     private Timestamp createTime;
 
     @Size(min = 1, max = 50)
-    @NotNull
     @Pattern(regexp = "^[A-Za-z0-9\s]+$",
             message = "Display may only contain letters, digits and spaces")
     private String displayName;
@@ -72,6 +72,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordEntry() {
+        return passwordEntry;
+    }
+
+    public void setPasswordEntry(String passwordEntry) {
+        this.passwordEntry = passwordEntry;
     }
 
     public String getPassword() {

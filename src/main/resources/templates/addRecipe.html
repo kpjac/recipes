@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:include="index :: head">
+  <title id="pageTitle">Add Recipe | Recipe Network</title>
+
+</head>
+<body>
+<header th:replace="index :: header"></header>
+<div class="container text-center">
+  <div>
+    <h1>Create Account</h1>
+  </div>
+  <form th:action="@{/processRecipe}" th:object="${recipe}"
+        method="post" style="max-width: 600px; margin: 0 auto;">
+    <div class="m-3">
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Category</label>
+        <div class="col-8">
+          <select name="category" th:field="*{category}" class="form-control" required>
+            <option th:each="category : ${T(com.fsd01.recipes.model.Category).values()}"
+                    th:value="${category}" th:text="${category.label}"></option>
+          </select>
+          <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Category Error</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Cuisine</label>
+        <div class="col-8">
+          <select name="cuisine" id="cuisine" th:field="*{cuisine}" class="form-control select2-single" required>
+            <option value="">Search cuisine</option>
+          </select>
+          <span th:if="${#fields.hasErrors('cuisine')}" th:errors="*{cuisine}">Cuisine Error</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Title</label>
+        <div class="col-8">
+          <input type="text" th:field="*{title}" class="form-control" required />
+          <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Description</label>
+        <div class="col-8">
+          <textarea th:field="*{description}" class="form-control" rows="3" required>
+          </textarea>
+          <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.full.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+
+<script>
+  $(document).ready(function() {
+  $("#cuisine").select2({
+    theme: "bootstrap",
+    ajax: {
+      url: '/cuisines',
+      dataType: 'json',
+      delay: 250,
+      processResults: function (response) {
+        return {
+          results: response
+        };
+      },
+      cache: true
+    }
+  });
+  });
+</script>
+</body>
+</html>

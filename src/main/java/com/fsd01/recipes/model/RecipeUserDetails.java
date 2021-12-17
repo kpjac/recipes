@@ -17,6 +17,10 @@ public class RecipeUserDetails implements UserDetails {
         return null;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -24,7 +28,7 @@ public class RecipeUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getDisplayName();
     }
 
     @Override

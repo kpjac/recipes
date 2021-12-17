@@ -24,8 +24,6 @@ public class Recipe {
 
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cuisineId", nullable = false)
     private Cuisine cuisine;
 
     private String title;
