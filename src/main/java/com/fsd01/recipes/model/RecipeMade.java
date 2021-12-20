@@ -18,21 +18,15 @@ public class RecipeMade {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", nullable = false)
-    @NotNull
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recipeId", nullable = false)
-    @NotNull
     private Recipe recipe;
 
     @CreationTimestamp
     private Timestamp timestamp;
 
-    private String comment;
-
-    @Min(0)
-    @Max(5)
     private Double rating;
 
     public RecipeMade() {
@@ -73,14 +67,6 @@ public class RecipeMade {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public Double getRating() {

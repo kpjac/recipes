@@ -2,11 +2,10 @@ package com.fsd01.recipes.model;
 
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,15 +18,18 @@ public class Recipe {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "creatorId", nullable = false)
+    @JoinColumn(name = "creatorId")
     private User creator;
 
+    @Enumerated(EnumType.ORDINAL)
     private Category category;
 
+    @Enumerated(EnumType.ORDINAL)
     private Cuisine cuisine;
 
     private String title;
 
+    @Size(max=25000)
     private String description;
 
     @CreationTimestamp
@@ -40,23 +42,30 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 
-    @Lob
+    @ElementCollection
+    @Column(length=25000)
     private List<String> steps;
 
+    @Enumerated(EnumType.ORDINAL)
     private Difficulty difficulty;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RecipeMade> timesMade;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "imageId", referencedColumnName = "id")
-    private Image image;
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Image> images;
+
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    private Integer likes;
 
 
     public Recipe() {
+        likes = 0;
     }
 
-    public Recipe(User creator, Category category, Cuisine cuisine, String title, String description, Integer cookingTime, Integer serves, List<Ingredient> ingredients, List<String> steps, Difficulty difficulty, Image image) {
+    public Recipe(User creator, Category category, Cuisine cuisine, String title, String description, Integer cookingTime, Integer serves, List<Ingredient> ingredients, List<String> steps, Difficulty difficulty) {
         this.creator = creator;
         this.category = category;
         this.cuisine = cuisine;
@@ -67,7 +76,7 @@ public class Recipe {
         this.ingredients = ingredients;
         this.steps = steps;
         this.difficulty = difficulty;
-        this.image = image;
+        this.likes = 0;
     }
 
     public Long getId() {
@@ -182,12 +191,28 @@ public class Recipe {
         timesMade.add(timeMade);
     }
 
-    public Image getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image) {
+        images.add(image);
+    }
+
+    public void setTimesMade(Set<RecipeMade> timesMade) {
+        this.timesMade = timesMade;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
@@ -206,7 +231,23 @@ public class Recipe {
                 ", steps=" + steps +
                 ", difficulty=" + difficulty +
                 ", timesMade=" + timesMade +
-                ", image=" + image +
+                ", image=" + images +
                 '}';
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public void like() {
+        likes++;
     }
 }

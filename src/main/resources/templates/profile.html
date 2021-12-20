@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:include="index :: head">
+    <title id="pageTitle">Recipe | Recipe Network</title>
+
+</head>
+<body>
+<header th:replace="index :: header"></header>
+<div class="container-md">
+    <main class="p-3 my-3 border rounded" id="recipeDisplay"
+          style="max-width: 900px; margin: 0 auto;">
+        <div class="mb-3 row">
+            <div class="mb-3 col-3">
+                <img src="/images/profileavatar.png" class="img-fluid rounded-circle" alt="">
+            </div>
+            <div class="mb-3 col-9">
+                <h1 class="display-5" th:text="${user.displayName}"></h1>
+                <p th:text="${user.bio}" style="font-size: 22px;"></p>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <h3 th:text="${user.displayName} + '\'s Recipes'"></h3>
+        </div>
+        <div class="mb-3 row row-cols-4">
+            <div class="col" th:each="recipe : ${recipes}">
+                <div class="card mb-3" th:fragment="recipeCard">
+                    <a th:href="@{/recipe(id=${recipe.id})}">
+                        <img th:src="'/files/' + ${recipe.getImages().get(0).id}" class="card-img-top" alt="...">
+                        <div class="d-flex flex-row flex-wrap justify-content-evenly">
+                            <div class="col mx-1 my-0" th:if="${recipe.likes > 10}">
+                                <span class="badge rounded-pill bg-primary">Popular</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.difficulty.label == 'Easy' && recipe.cookingTime < 25}">
+                                <span class="badge rounded-pill bg-primary">Quick & Easy</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Dinner' && recipe.cookingTime < 25}">
+                                <span class="badge rounded-pill bg-primary">Dinner on the Go</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Baked' && recipe.likes > 5}">
+                                <span class="badge rounded-pill bg-primary">Baked Delight</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Vegan'}">
+                                <span class="badge rounded-pill bg-primary">Vegan</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Gluten-free'}">
+                                <span class="badge rounded-pill bg-primary">Gluten-Free</span>
+                            </div>
+                            <div class="col mx-1 my-0" th:if="${recipe.difficulty.label == 'Advanced' && recipe.cookingTime > 75}">
+                                <span class="badge rounded-pill bg-primary">Master Chef</span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2 pb-0">
+                            <h5 class="card-title" th:text="${recipe.title}"></h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <h3 th:text="'Recipes made by ' + ${user.displayName}"></h3>
+        </div>
+        <div class="mb-3 row row-cols-4">
+            <div class="col" th:each="recipe : ${recipesMade}">
+                <div class="card" th:include=":: recipeCard">
+
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

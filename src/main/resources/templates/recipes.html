@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:include="index :: head">
+  <title id="pageTitle">Recipes | Recipe Network</title>
+
+</head>
+<body>
+<header th:replace="index :: header"></header>
+<div class="container-md">
+  <main class="p-3 my-3 border rounded" id="recipeDisplay"
+        style="max-width: 600px; margin: 0 auto;">
+
+<div class="mb-2 row">
+  <h3 th:text="'Recipes - ' + ${category}"></h3>
+</div>
+<div class="mb-4 row row-cols-3">
+  <div class="col" th:each="recipe : ${recipes}">
+    <div class="card mb-3" th:include="profile :: recipeCard">
+    </div>
+  </div>
+</div>
+
+  </main>
+</div>
+
+</body>
+</html>

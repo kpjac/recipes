@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:include="index :: head">
+    <title id="pageTitle">404 Not Found | Recipe Network</title>
+</head>
+<body>
+<header th:replace="index :: header"></header>
+<main class="p-3 my-3 border rounded"
+      style="max-width: 600px; margin: 0 auto;">
+    <div>
+        <h1>404 Not Found</h1>
+        <p>We're sorry, the content you requested cannot be found.</p>
+    </div>
+</main>
+</body>
+</html>

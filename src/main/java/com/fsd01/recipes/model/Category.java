@@ -16,7 +16,9 @@ public enum Category {
     SNACK("Snack"),
     SOUP("Soup"),
     HOLIDAY("Holiday"),
-    BEVERAGE("Beverage");
+    BEVERAGE("Beverage"),
+    VEGAN("Vegan"),
+    GLUTEN_FREE("Gluten-free");
 
     @Getter
     String label;

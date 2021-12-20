@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ImageStorageService {
 
@@ -19,11 +21,15 @@ public class ImageStorageService {
 
     public Image store(MultipartFile file, Recipe recipe) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Image FileDB = new Image(fileName, file.getContentType(), file.getBytes(), recipe);
+        System.out.println("fileName set");
+        Image fileDB = new Image(fileName, file.getContentType(), file.getBytes(), recipe);
+        System.out.println("Image object created");
 
-        return imageRepo.save(FileDB);
+        imageRepo.save(fileDB);
+        return fileDB;
     }
 
+    @Transactional
     public Image getFile(String id) {
         return imageRepo.findById(id).get();
     }

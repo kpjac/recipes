@@ -15,6 +15,10 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>17</java.version>
+        <property
+                name="hibernate.connection.provider_disables_autocommit"
+                value="true"
+        />
     </properties>
 
     <dependencies>
@@ -47,7 +51,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

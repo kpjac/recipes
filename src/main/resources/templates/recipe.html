@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:include="index :: head">
+    <title id="pageTitle">Recipe | Recipe Network</title>
+
+</head>
+<body>
+<header th:replace="index :: header"></header>
+<div class="container-md">
+    <main class="p-3 my-3 border rounded" id="recipeDisplay"
+          style="max-width: 600px; margin: 0 auto;">
+        <div class="mb-3">
+            <h1 class="display-4" th:text="${recipe.title}"></h1>
+            <h4>by <a class="link-info" th:href="@{/profile(id=${recipe.creator.id})}"><span th:text="${recipe.creator.displayName}"></span></a></h4>
+        </div>
+        <div class="mb-3">
+            <img th:src="'/files/' + ${image.id}" class="img-fluid" alt="recipe image">
+        </div>
+        <div class="sticky-top mb-3 nav flex-column align-items-end" id="socialButtons"
+                style="margin-top: -250px; margin-right: -75px">
+            <br>
+            <div class="socialButton mb-3">
+                <button class="nav-item btn btn-primary position-relative" id="likeButton">Like <i class="bi bi-hand-thumbs-up"></i>
+                    <span th:text="${recipe.likes}" id="likesBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"></span>
+                    </button></div>
+            <div class="socialButton mb-3">
+                <button th:unless="${madeByUser}" class="nav-item btn btn-primary position-relative" id="madeButton">Made It <i class="bi bi-award"></i>
+                    <span th:text="${recipe.timesMade.size()}" id="madeBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"></span>
+                </button>
+                <button th:if="${madeByUser}" class="nav-item btn btn-success position-relative" id="madeButton" disabled><em>You made it!</em> <i class="bi bi-award"></i>
+                    <span th:text="${recipe.timesMade.size()}" id="madeBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"></span>
+                </button>
+            </div>
+            <div class="socialButton mb-3">
+                <button class="nav-item btn btn-primary" id="shareButton">Share <i class="bi bi-share"></i>
+                    </button></div>
+            <br>
+        </div>
+        <div class="mb-3 row row-cols-3 text-center">
+            <div class="col">
+                <i class="bi bi-tag-fill"></i>
+                <span th:text="${recipe.category.label}"></span>
+            </div>
+            <div class="col">
+                <i class="bi bi-globe"></i>
+                <span th:text="${recipe.cuisine.label}"></span>
+
+            </div>
+            <div class="col">
+                <i class="bi bi-star-fill"></i>
+                <span th:text="${recipe.difficulty.label}"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <p th:utext="${#strings.replace(#strings.escapeXml(recipe.description),'&#10;','&lt;br&gt;')}"></p>
+        </div>
+        <div class="mb-3 row row-cols-2 text-center">
+            <div class="col">
+                <i class="bi bi-clock-fill"></i>
+                <span th:text="${recipe.cookingTime} + ' minutes'"></span>
+            </div>
+            <div class="col">
+                <i class="bi bi-people-fill"></i>
+                <span th:text="${recipe.serves} + ' servings'"></span>
+
+            </div>
+        </div>
+
+
+        <h5>Ingredients</h5>
+        <div class="row mb-3">
+            <ul class="col mx-4">
+                <li class="py-2" th:each="i: ${recipe.ingredients}" th:text="(${i.amount} % 1 == 0 ? ${#numbers.formatDecimal(i.amount,1,0)} : ${i.amount}) + ' ' + (${i.unit.label} == 'None' ? '' : (${i.unit.label} + ' ')) + ${i.name}"></li>
+            </ul>
+        </div>
+
+
+        <h5>Instructions</h5>
+        <div class="row mb-3">
+            <ol class="col mx-4 custom-counter">
+                <li class="py-2" th:each="step: ${recipe.steps}" th:utext="${#strings.replace(#strings.escapeXml(step),'&#10;','&lt;br&gt;')}"></li>
+            </ol>
+        </div>
+
+
+
+    </main>
+    <section class="container comments p-3 my-3 border rounded" style="max-width: 600px; margin: 0 auto;">
+        <h2>Comments</h2>
+        <th:block th:each="comment: ${comments}" >
+            <h6><span th:text="${comment.author.displayName}"></span> wrote:</h6>
+            <div class="row mb-3">
+                <p th:text="${comment.body}"></p>
+                <small style="text-align: right;" th:text="${#dates.format(comment.timestamp, 'dd-MM-yyyy HH:mm')}"></small>
+            </div>
+        </th:block>
+        <p class="ms-3" th:if="!${#request.userPrincipal}">You must be logged in to post a comment.</p>
+        <form id="addComment" sec:authorize="isAuthenticated()" th:action="@{/process_newComment(id=${recipe.id})}" th:object="${comment}"
+              method="post" style="max-width: 600px; margin: 0 auto;">
+            <h3>Leave Comment</h3>
+            <div class="m-3">
+                <div class="form-group mb-3 row">
+                    <label class="col-2 col-form-label">Comment</label>
+                    <div class="col-10">
+          <textarea th:field="*{body}" class="form-control" id="commentText" required></textarea>
+                        <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Body Error</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <button type="submit" class="btn btn-primary">Leave Comment</button>
+                    <div th:if="${commentPosted}" class="commentPosted">
+                        <span>Comment posted successfully</span>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </section>
+</div>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        let id;
+        let searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('id')) {
+            id = searchParams.get('id');
+        }
+        $('#likeButton').click(function() {
+            $.ajax
+            ({
+                url: 'processLike',
+                data: {"recipeId": id},
+                type: "POST",
+                success: function(result)
+                {
+                    let likes = parseInt($('#likesBadge').html());
+                    console.log(likes);
+                    $('#likeButton').removeClass("btn-primary").addClass("btn-success").prop('disabled', true).html("<em>Liked</em><i class=\"bi bi-hand-thumbs-up\"></i><span id=\"likesBadge\" class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info\">" + (likes + 1) + "</span>");
+
+                }
+            });
+        })
+        $('#madeButton').click(function() {
+            $.ajax
+            ({
+                url: 'processRecipeMade',
+                data: {"recipeId": id},
+                type: "POST",
+                success: function(result)
+                {
+                    let timesMade = parseInt($('#madeBadge').html());
+                    $('#madeButton').removeClass("btn-primary").addClass("btn-success").prop('disabled', true).html("<em>You made it!</em><i class=\"bi bi-award\"></i><span id=\"madeBadge\" class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info\">" + (timesMade + 1) + "</span>");
+
+                }
+            });
+        })
+
+    })
+
+</script>
+</body>
+</html>

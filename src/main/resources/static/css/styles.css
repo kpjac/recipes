@@ -8,8 +8,8 @@ nav.authMenu li {
     display: inline-block;
 }
 
-form {
-    background-color: rgba(255,255,255,0.8);
+form:not(#addComment), main, section {
+    background-color: rgba(255,255,255,0.85);
 }
 
 form h1, form h2, form h5 {
@@ -25,4 +25,67 @@ body {
     background-position-x: right;
     background-attachment: fixed;
     background-size: cover;
+}
+
+div > i {
+    font-size: 1.3rem;
+    color: #82d78c;
+}
+
+.custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+}
+
+.custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: #82d78c;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+.socialButton button {
+    font-weight: bold;
+}
+
+.socialButton i {
+    font-size: 1.3rem;
+}
+
+button:disabled {
+    opacity: 1.0 !important;
+}
+
+i + span {
+    font-weight: bold;
+}
+
+.card a {
+    text-decoration: none;
+}
+
+.authMenu a {
+    font-weight: bold;
+}
+
+.homePage i {
+    color: #d2556e;
+}
+
+.homePage h3 {
+    color: #d2556e !important;
+}
+
+.card span.badge {
+    background-color: #d2556e !important;
 }

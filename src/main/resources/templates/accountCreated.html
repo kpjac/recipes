@@ -5,16 +5,17 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container text-center">
+<main class="p-3 my-3 border rounded"
+      style="max-width: 600px; margin: 0 auto;">
   <div>
     <h1>Welcome to Recipe Network</h1>
     <p>Your account was created successfully.</p>
   </div>
-  <div>
-    <a href="/">Search for a recipe</a>
-    <a href="/addRecipe">Post a recipe</a>
+  <div class="row d-flex justify-content-evenly">
+    <a class="btn btn-outline-primary" href="/">See recipes</a>
+    <a class="btn btn-outline-primary" href="/addRecipe">Post a recipe</a>
 
   </div>
-</div>
+</main>
 </body>
 </html>

@@ -5,63 +5,48 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container text-center">
-  <div>
-    <h1>Create Account</h1>
-  </div>
-  <form th:action="@{/processRegister}" th:object="${user}"
-        method="post" style="max-width: 600px; margin: 0 auto;">
-    <div class="m-3">
-      <div class="form-group row">
-        <label class="col-4 col-form-label">E-mail</label>
-        <div class="col-8">
-          <input type="email" name="email" th:field="*{email}" class="form-control" required />
-          <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-        </div>
+<div class="container">
+  <form class="p-3 my-3 border rounded" th:action="@{/processRegister}" th:object="${user}"
+        method="post" style="max-width: 500px; margin: 0 auto;">
+    <div>
+      <h1>Create Account</h1>
+    </div>
+      <div class="form-floating mb-3">
+        <input th:field="*{email}" type="email" name="email" id="email" class="form-control" placeholder="name@example.com" required>
+        <label for="email">E-mail</label>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Password</label>
-        <div class="col-8">
-          <input type="password" th:field="*{passwordEntry}" class="form-control"
-                 required minlength="6" maxlength="100"/>
-          <span th:if="${#fields.hasErrors('passwordEntry')}" th:errors="*{passwordEntry}">Password Error</span>
-        </div>
+      <div class="form-floating mb-3">
+        <input th:field="*{passwordEntry}" type="password" id="password" class="form-control" required minlength="6" maxlength="100" placeholder="Password">
+        <label for="password">Password</label>
+        <span th:if="${#fields.hasErrors('passwordEntry')}" th:errors="*{passwordEntry}">Password Error</span>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Re-enter Password</label>
-        <div class="col-8">
-          <input type="password" th:field="*{passwordRepeat}" class="form-control"
-                 required minlength="6" maxlength="100"/>
-        </div>
+      <div class="form-floating mb-3">
+        <input th:field="*{passwordRepeat}" type="password" id="pwdRepeat" class="form-control" required minlength="6" maxlength="100" placeholder="Password">
+        <label for="pwdRepeat">Re-enter Password</label>
+
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Display Name</label>
-        <div class="col-8">
-          <input type="text" th:field="*{displayName}" class="form-control" required />
-          <span th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}">Display Name Error</span>
-        </div>
+      <div class="form-floating mb-3">
+        <input th:field="*{displayName}" type="text" id="displayName" class="form-control" required placeholder="Display Name">
+        <label for="displayName">Display Name</label>
+        <span th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}">Display Name Error</span>
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Bio</label>
-        <div class="col-8">
-          <textarea th:field="*{bio}" class="form-control" rows="3" required>
-          </textarea>
-          <span th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}">Display Name Error</span>
-        </div>
+      <div class="form-floating mb-3">
+        <textarea th:field="*{bio}" id="bio" class="form-control" style="height: 100px" placeholder="Tell us a bit about what brings you to Recipe Network." required></textarea>
+        <label for="bio">Bio</label>
+        <span th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}">Display Name Error</span>
       </div>
 
-      <div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary text-center">Sign Up</button>
       </div>
 
       <div><ul th:if="${otherErrors != null}">
         <li th:each="error : ${otherErrors}"><span th:text="${error}"></span></li>
       </ul></div>
-    </div>
   </form>
 </div>
 </body>

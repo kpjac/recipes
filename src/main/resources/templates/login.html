@@ -5,29 +5,26 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container text-center">
-  <div>
-    <h1>Log In</h1>
-  </div>
-  <form th:action="@{/login}"
-        method="post" style="max-width: 600px; margin: 0 auto;">
+<div class="container">
+  <form class="p-3 my-3 border rounded" th:action="@{/login}"
+        method="post" style="max-width: 500px; margin: 0 auto;">
+    <div>
+      <h1>Log In</h1>
+    </div>
     <div class="m-3">
-      <div class="form-group row">
-        <label class="col-4 col-form-label">E-mail</label>
-        <div class="col-8">
-          <input type="email" name="email" class="form-control" required />
-        </div>
+      <div class="form-floating row mb-3">
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required />
+        <label for="email">E-mail</label>
+
       </div>
 
-      <div class="form-group row">
-        <label class="col-4 col-form-label">Password</label>
-        <div class="col-8">
-          <input type="password" name="password" class="form-control"
-                 required minlength="6" maxlength="100"/>
-        </div>
+      <div class="form-floating row mb-3">
+        <input type="password" name="password" id="password" class="form-control"
+               required minlength="6" maxlength="100" placeholder="Password"/>
+        <label for="password">Password</label>
       </div>
 
-      <div>
+      <div class="text-center">
         <button type="submit" class="btn btn-primary">Log In</button>
       </div>
 
