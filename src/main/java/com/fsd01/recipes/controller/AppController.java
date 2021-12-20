@@ -29,10 +29,8 @@ import tec.units.ri.unit.Units;
 import systems.uom.unicode.CLDR;
 import systems.uom.common.USCustomary;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -387,6 +385,12 @@ public class AppController {
         return "recipes";
     }
 
+    @GetMapping("/users")
+    public String showUsersAdmin(Model model) {
+        List<User> users = userService.getUserRepo().findAll();
+        model.addAttribute("users", users);
+        return "users";
+    }
 
 
 }

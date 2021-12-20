@@ -8,6 +8,8 @@ import java.util.Collection;
 public class RecipeUserDetails implements UserDetails {
     private User user;
 
+    private boolean locked;
+
     public RecipeUserDetails(User user) {
         this.user = user;
     }
@@ -50,4 +52,5 @@ public class RecipeUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

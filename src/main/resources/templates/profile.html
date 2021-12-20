@@ -30,25 +30,25 @@
                         <img th:src="'/files/' + ${recipe.getImages().get(0).id}" class="card-img-top" alt="...">
                         <div class="d-flex flex-row flex-wrap justify-content-evenly">
                             <div class="col mx-1 my-0" th:if="${recipe.likes > 10}">
-                                <span class="badge rounded-pill bg-primary">Popular</span>
+                                <span class="badge rounded-pill bg-secondary">Popular</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.difficulty.label == 'Easy' && recipe.cookingTime < 25}">
-                                <span class="badge rounded-pill bg-primary">Quick & Easy</span>
+                                <span class="badge rounded-pill bg-secondary">Quick & Easy</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Dinner' && recipe.cookingTime < 25}">
-                                <span class="badge rounded-pill bg-primary">Dinner on the Go</span>
+                                <span class="badge rounded-pill bg-secondary">Dinner on the Go</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Baked' && recipe.likes > 5}">
-                                <span class="badge rounded-pill bg-primary">Baked Delight</span>
+                                <span class="badge rounded-pill bg-secondary">Baked Delight</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Vegan'}">
-                                <span class="badge rounded-pill bg-primary">Vegan</span>
+                                <span class="badge rounded-pill bg-secondary">Vegan</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.category.label == 'Gluten-free'}">
-                                <span class="badge rounded-pill bg-primary">Gluten-Free</span>
+                                <span class="badge rounded-pill bg-secondary">Gluten-Free</span>
                             </div>
                             <div class="col mx-1 my-0" th:if="${recipe.difficulty.label == 'Advanced' && recipe.cookingTime > 75}">
-                                <span class="badge rounded-pill bg-primary">Master Chef</span>
+                                <span class="badge rounded-pill bg-secondary">Master Chef</span>
                             </div>
                         </div>
                         <div class="card-body pt-2 pb-0">

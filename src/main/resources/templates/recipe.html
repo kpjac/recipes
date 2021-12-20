@@ -151,7 +151,10 @@
                 success: function(result)
                 {
                     let timesMade = parseInt($('#madeBadge').html());
-                    $('#madeButton').removeClass("btn-primary").addClass("btn-success").prop('disabled', true).html("<em>You made it!</em><i class=\"bi bi-award\"></i><span id=\"madeBadge\" class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info\">" + (timesMade + 1) + "</span>");
+                    $('#madeButton').removeClass("btn-primary").addClass("btn-success").prop('disabled', true)
+                        .html("<em>You made it!</em><i class=\"bi bi-award\"></i><span id=\"madeBadge\" " +
+                            "class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info\">"
+                            + (timesMade + 1) + "</span>");
 
                 }
             });

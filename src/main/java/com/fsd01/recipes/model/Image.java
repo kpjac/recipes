@@ -1,12 +1,8 @@
 package com.fsd01.recipes.model;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.springframework.lang.Nullable;
-import org.hibernate.type.ImageType;
 
 import javax.persistence.*;
-import javax.print.DocFlavor;
 
 @Entity
 @Table(name = "images")

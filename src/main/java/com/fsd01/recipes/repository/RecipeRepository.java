@@ -19,11 +19,15 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     Optional<Recipe> findRecipeById(Long id);
 
     // Return a list of recipe categories in order by how many recipes in the category were created or made by a user
-    @Query("select r.category from Recipe r left join RecipeMade rm on r.id = rm.recipe.id WHERE r.creator.id = ?1 OR rm.user.id = ?1 group by r.category order by count(r.id) desc")
+    @Query("select r.category from Recipe r left join RecipeMade rm on r.id = rm.recipe.id " +
+            "WHERE r.creator.id = ?1 OR rm.user.id = ?1 " +
+            "group by r.category order by count(r.id) desc")
     List<Category> countByCategoryByUser(Long id);
 
     // Return a list of recipe cuisines in order by how many recipes in the cuisine were created or made by a user
-    @Query("select r.cuisine from Recipe r left join RecipeMade rm on r.id = rm.recipe.id WHERE r.creator.id = ?1 OR rm.user.id = ?1 group by r.cuisine having count(r.id) > 0 order by count(r.id) desc")
+    @Query("select r.cuisine from Recipe r left join RecipeMade rm on r.id = rm.recipe.id " +
+            "WHERE r.creator.id = ?1 OR rm.user.id = ?1 " +
+            "group by r.cuisine having count(r.id) > 0 order by count(r.id) desc")
     List<Cuisine> countByCuisineByUser(Long id);
 
     // The above queries supply the following one.
@@ -35,13 +39,13 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     List<Recipe> findAllByCategory(Category category);
 
-    // Top 10 new
+    // Top 8 new
     List<Recipe> findTop8ByOrderByCreateTimeDesc();
 
-    // Top 10 popular
+    // Top 8 popular
     List<Recipe> findTop8ByOrderByLikesDesc();
 
-    // Top 10 category (by popularity)
+    // Top 8 category (by popularity)
     List<Recipe> findTop8ByCategoryOrderByLikes(Category category);
 
     // Keyword search

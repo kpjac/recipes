@@ -1,6 +1,7 @@
 package com.fsd01.recipes.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -54,6 +55,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RecipeMade> recipesMade;
+
+    private boolean locked;
 
     public User() {
     }
@@ -161,6 +164,14 @@ public class User {
 
     public void setRecipesMade(Set<RecipeMade> recipesMade) {
         this.recipesMade = recipesMade;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

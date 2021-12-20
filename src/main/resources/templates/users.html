@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:include="index :: head">
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<table class="table bg-white">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Email</th>
+        <th scope="col">Display Name</th>
+        <th scope="col">Member Since</th>
+        <th scope="col">Recipes</th>
+        <th scope="col">Recipes Made</th>
+        <th scope="col">Comments</th>
+        <th scope="col">Lock</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <th scope="row" th:text="${user.id}"></th>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.displayName}"></td>
+        <td th:text="${user.createTime}"></td>
+        <td th:text="${user.recipes.size()}"></td>
+        <td th:text="${user.recipesMade.size()}"></td>
+        <td th:text="${user.comments.size()}"></td>
+        <td><button class="btn btn-secondary btn-sm" th:text="${user.isLocked()} ? 'Unlock User' : 'Lock User'"></button></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

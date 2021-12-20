@@ -29,7 +29,7 @@ public class Recipe {
 
     private String title;
 
-    @Size(max=25000)
+    @Size(max=25000, message = "Your description is too long, max 25,000 characters")
     private String description;
 
     @CreationTimestamp
