@@ -37,23 +37,25 @@
 <script>
     $(document).ready(function() {
         $('.lockUser').click(function() {
+            const button = this;
             $.ajax({
                 url: '/lockUser',
                 type: 'POST',
                 data: {'id': this.id},
                 success: function (result) {
-                    this.addClass('unlockUser').removeClass('lockUser').html("Unlock User");
+                    button.addClass('unlockUser').removeClass('lockUser').html("Unlock User");
                 }
             });
 
         });
         $('.unlockUser').click(function() {
+            const button = this;
             $.ajax({
                 url: '/unlockUser',
                 type: 'POST',
                 data: {'id': this.id},
                 success: function (result) {
-                    this.addClass('lockUser').removeClass('unlockUser').html("Lock User");
+                    button.addClass('lockUser').removeClass('unlockUser').html("Lock User");
                 }
             });
 
