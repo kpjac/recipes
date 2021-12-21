@@ -29,9 +29,37 @@
         <td th:text="${user.recipes.size()}"></td>
         <td th:text="${user.recipesMade.size()}"></td>
         <td th:text="${user.comments.size()}"></td>
-        <td><button class="btn btn-secondary btn-sm" th:text="${user.isLocked()} ? 'Unlock User' : 'Lock User'"></button></td>
+        <td><button th:class="'btn btn-secondary btn-sm ' + (${user.isLocked()} ? 'unlockUser' : 'lockUser' )" th:id="${user.id}" th:text="${user.isLocked()} ? 'Unlock User' : 'Lock User'"></button></td>
     </tr>
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function() {
+        $('.lockUser').click(function() {
+            $.ajax({
+                url: '/lockUser',
+                type: 'POST',
+                data: {'id': this.id},
+                success: function (result) {
+                    this.addClass('unlockUser').removeClass('lockUser').html("Unlock User");
+                }
+            });
+
+        });
+        $('.unlockUser').click(function() {
+            $.ajax({
+                url: '/unlockUser',
+                type: 'POST',
+                data: {'id': this.id},
+                success: function (result) {
+                    this.addClass('lockUser').removeClass('unlockUser').html("Lock User");
+                }
+            });
+
+        });
+    })
+</script>
+
 </body>
 </html>
