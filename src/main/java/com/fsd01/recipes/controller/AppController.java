@@ -395,9 +395,13 @@ public class AppController {
     @PostMapping("/lockUser")
     @ResponseBody
     public ResponseEntity<String> lockUser(@RequestParam(name="id") Long id) {
-        User user = userService.getUserRepo().getById(id);
+        Optional<User> userOptional = userService.getUserRepo().findUserById(id);
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        User user = userOptional.get();
         user.setLocked(true);
-        userService.addUser(user);
+        userService.addUser(user); // Saves
         return new ResponseEntity<>("User locked", HttpStatus.OK);
     }
 
