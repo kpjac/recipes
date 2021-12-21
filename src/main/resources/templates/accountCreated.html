@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head th:include="index :: head">
-  <title id="pageTitle">Account Created | Recipe Network</title>
+    <title id="pageTitle">Account Created | Recipe Network</title>
 </head>
 <body>
 <header th:replace="index :: header"></header>
 <main class="p-3 my-3 border rounded"
       style="max-width: 600px; margin: 0 auto;">
-  <div>
-    <h1>Welcome to Recipe Network</h1>
-    <p>Your account was created successfully.</p>
-  </div>
-  <div class="row d-flex justify-content-evenly">
-    <a class="btn btn-outline-primary" href="/">See recipes</a>
-    <a class="btn btn-outline-primary" href="/addRecipe">Post a recipe</a>
+    <div>
+        <h1>Welcome to Recipe Network</h1>
+        <p>Your account was created successfully.</p>
+    </div>
+    <div class="row my-3 d-flex justify-content-evenly">
+        <div class="m-2">
+          <a class="btn btn-outline-primary" href="/">See recipes</a></div>
+        <div class="m-2">
+          <a class="btn btn-outline-primary" href="/addRecipe">Post a recipe</a></div>
 
-  </div>
+    </div>
 </main>
 </body>
 </html>
