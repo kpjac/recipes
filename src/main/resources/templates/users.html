@@ -42,8 +42,8 @@
                 url: '/lockUser',
                 type: 'POST',
                 data: {'id': id},
-                success: function (result, id) {
-                    $('#' + id).addClass('unlockUser').removeClass('lockUser').html("Unlock User");
+                success: function (result) {
+                    location.reload();
                 }
             });
 
@@ -55,7 +55,7 @@
                 type: 'POST',
                 data: {'id': id},
                 success: function (result, id) {
-                    $('#' + id).addClass('lockUser').removeClass('unlockUser').html("Lock User");
+                    location.reload();
                 }
             });
 
