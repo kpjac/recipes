@@ -36,8 +36,8 @@
 
 <script>
     $(document).ready(function() {
-        const id = this.id;
         $('.lockUser').click(function() {
+            let id = this.id;
             $.ajax({
                 url: '/lockUser',
                 type: 'POST',
@@ -49,7 +49,7 @@
 
         });
         $('.unlockUser').click(function() {
-            const id = this.id;
+            let id = this.id;
             $.ajax({
                 url: '/unlockUser',
                 type: 'POST',
