@@ -24,8 +24,11 @@
         <label for="password">Password</label>
       </div>
 
-      <div class="text-center">
+      <div class="text-center row mb-3">
         <button type="submit" class="btn btn-primary">Log In</button>
+      </div>
+      <div th:if="${param.error}" class="alert alert-danger row mb-3">
+        Invalid login.
       </div>
 
     </div>
